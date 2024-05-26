@@ -12,5 +12,5 @@ An audio file of the target speaker is required to compare against speakers dete
 
 ### Technical Process
 
-All necessary methods are contained within the ```python memoizeProcessAudio``` class. 
-The selected audio file for tokenization is passed into the ```python process``` method. It is split up and saved into audio subfiles containing all of the different speakers detec
+All necessary methods are contained within the ```memoizeProcessAudio``` class. 
+The selected audio file for tokenization is passed into the ```process``` method. It is split up and saved into audio subfiles containing all of the different speakers detec

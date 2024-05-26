@@ -13,4 +13,4 @@ An audio file of the target speaker is required to compare against speakers dete
 ### Technical Process
 
 All necessary methods are contained within the ```memoizeProcessAudio``` class. 
-The selected audio file for tokenization is passed into the ```process``` method. It is split up and saved into audio subfiles containing all of the different speakers detec
+The selected audio file for tokenization is passed into the ```process``` method. It is sequentially split up and saved into audio subfiles of all segments containing different detected speakers. Each of those audio files are then compared against the reference audio file of the target speaker using the ```speechbrain``` library. OpenAI's ```whisper``` is then used to transcribe the audio files and save them into ```transcription.txt``` into a script-like format, split up by speaker with the target speaker's speech labeled as the target speaker. The script is then tokenized using the ```transformers``` library, but nothing is currently done with these tokens. 

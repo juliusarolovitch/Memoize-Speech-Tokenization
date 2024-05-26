@@ -3,9 +3,10 @@ import whisper
 from pydub import AudioSegment
 from pyannote.audio import Pipeline
 from speechbrain.inference.speaker import SpeakerRecognition
+from transformers import AutoTokenizer
 
 
-class segAudio:
+class memoizeAudioProccessing:
     def __init__(self, whisper_model_size="base"):
         self.whisper_model = whisper.load_model(whisper_model_size)
         self.verification = SpeakerRecognition.from_hparams(
@@ -45,7 +46,7 @@ class segAudio:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
-        speaker_segments = self.diarizeAudio(input_audio_path, output_dir)
+        speaker_segments = self.diarize(input_audio_path, output_dir)
         transcriptions = []
 
         for speaker, segments in speaker_segments.items():
@@ -60,7 +61,7 @@ class segAudio:
                     transcriptions.append(f"{transcription} (Target Speaker)")
                 else:
                     transcriptions.append(f"{transcription} (Other Speaker)")
-        file_path = os.path.join(output_dir, "transcriptions.txt")
+        file_path = os.path.join(output_dir, "transcription.txt")
         with open(file_path, "w") as f:
             for transcription in transcriptions:
                 f.write(transcription + "\n")
@@ -79,7 +80,7 @@ input_audio_path = "path/to/your/audio/file.wav"
 output_dir = "path/to/output/directory"
 reference_audio_path = "path/to/target/speaker/reference_audio.wav"
 
-processor = segAudio()
+processor = memoizeAudioProccessing()
 file_path = processor.process(
     input_audio_path, output_dir, reference_audio_path)
 tokens = processor.tokenize(file_path)
